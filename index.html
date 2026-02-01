@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetyczne Bransoletki dla Par 2.0</title>
+<style>
+/* ─── RESET ─── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* ─── BASE ─── */
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  background:#fff;
+  color:#1a1a1a;
+  font-size:14px;
+  line-height:1.6;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+
+/* ─── PROMO BAR ─── */
+.promo{
+  background:#1a1a1a;
+  color:#fff;
+  text-align:center;
+  padding:10px 16px;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:0.2px;
+}
+
+/* ─── HEADER ─── */
+header{
+  background:#fff;
+  border-bottom:1px solid #e5e5e5;
+  padding:20px 20px;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:100;
+  background-color:#fff;
+}
+.hdr-logo{
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:0.3px;
+  color:#1a1a1a;
+  text-transform:uppercase;
+}
+
+/* ─── PRODUCT WRAP ─── */
+.prod-wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:28px 24px 70px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:start;
+}
+
+/* ─── GALLERY (left) ─── */
+.gallery{position:sticky;top:78px}
+
+.gal-main{
+  width:100%;
+  aspect-ratio:1;
+  background:#fff;
+  overflow:hidden;
+  position:relative;
+}
+.gal-main img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .4s ease;
+}
+.gal-main:hover img{transform:scale(1.03)}
+
+.thumbs{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-top:8px;
+}
+.thumb{
+  aspect-ratio:1;
+  background:#fff;
+  overflow:hidden;
+  cursor:pointer;
+  border:1px solid #e5e5e5;
+  transition:border-color .2s;
+}
+.thumb:hover{border-color:#aaa}
+.thumb.active{border-color:#1a1a1a}
+.thumb img{width:100%;height:100%;object-fit:cover}
+
+/* ─── PRODUCT INFO (right) ─── */
+.prod-info{}
+
+.prod-title{
+  font-size:26px;
+  font-weight:600;
+  color:#1a1a1a;
+  line-height:1.25;
+  margin-bottom:14px;
+}
+
+/* Price */
+.price-row{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  margin-bottom:6px;
+}
+.price-sale{font-size:20px;font-weight:600;color:#1a1a1a}
+.price-orig{font-size:15px;color:#999;text-decoration:line-through}
+
+/* Reviews bar */
+.rev-bar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:22px;
+  margin-top:10px;
+}
+.stars{color:#1a1a1a;font-size:13px;letter-spacing:1.5px}
+.rev-cnt{font-size:13px;color:#555;text-decoration:underline;cursor:pointer}
+
+/* Option labels */
+.opt-lbl{
+  font-size:14px;
+  font-weight:600;
+  color:#1a1a1a;
+  margin-bottom:6px;
+}
+
+/* Color dropdown */
+.color-select{
+  width:100%;
+  padding:11px 14px;
+  border:1px solid #d1d1d1;
+  border-radius:4px;
+  font-size:14px;
+  background:#fff;
+  color:#1a1a1a;
+  cursor:pointer;
+  margin-bottom:20px;
+  -webkit-appearance:auto;
+  appearance:auto;
+}
+.color-select:focus{outline:none;border-color:#1a1a1a}
+
+/* Quantity */
+.qty-wrap{margin-bottom:20px}
+.qty-box{
+  display:inline-flex;
+  border:1px solid #d1d1d1;
+  border-radius:4px;
+  overflow:hidden;
+}
+.qty-btn{
+  width:40px;height:44px;
+  border:none;background:#fff;
+  color:#1a1a1a;font-size:18px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.qty-btn:hover{background:#f4f4f4}
+.qty-val{
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:500;
+  border-left:1px solid #d1d1d1;
+  border-right:1px solid #d1d1d1;
+  background:#fff;
+}
+
+/* Promo note above button */
+.promo-note{
+  font-size:13px;
+  color:#1a1a1a;
+  font-weight:500;
+  text-align:center;
+  margin-bottom:14px;
+  line-height:1.5;
+}
+
+/* Add to cart */
+.btn-cart{
+  width:100%;
+  padding:15px 20px;
+  background:#1a1a1a;
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .2s;
+  letter-spacing:0.3px;
+}
+.btn-cart:hover{background:#333}
+
+/* Divider */
+.divider{
+  border:none;
+  border-top:1px solid #e5e5e5;
+  margin:26px 0;
+}
+
+/* ─── PRODUCT DESCRIPTION ─── 
+   Matches original: single continuous block, 
+   same font/size/color as body, bold inline only.
+*/
+.prod-desc{
+  font-size:14px;
+  line-height:1.75;
+  color:#1a1a1a;
+}
+.prod-desc p{
+  margin-bottom:10px;
+}
+.prod-desc strong{
+  font-weight:700;
+}
+
+/* ─── REVIEWS ─── */
+.rev-section{
+  max-width:1180px;
+  margin:0 auto;
+  padding:40px 24px 60px;
+  border-top:1px solid #e5e5e5;
+}
+.rev-head{margin-bottom:20px}
+.rev-head h2{font-size:18px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
+.rev-summary{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:#666;
+}
+.rev-summary .stars{color:#1a1a1a}
+.rev-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.r-card{
+  border:1px solid #e5e5e5;
+  border-radius:6px;
+  padding:18px;
+}
+.r-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.r-av{
+  width:34px;height:34px;border-radius:50%;
+  background:#1a1a1a;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:600;flex-shrink:0;
+}
+.r-nm{font-size:14px;font-weight:600;color:#1a1a1a}
+.r-st{color:#1a1a1a;font-size:12px;letter-spacing:1px;margin-top:1px}
+.r-ttl{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.r-bdy{font-size:13px;color:#555;line-height:1.6}
+
+/* ─── FOOTER ─── */
+footer{
+  background:#1a1a1a;
+  color:rgba(255,255,255,.45);
+  padding:40px 24px 22px;
+}
+.ft-in{max-width:1180px;margin:0 auto}
+.ft-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:36px;
+}
+.ft-brand{font-size:17px;font-weight:600;color:#fff;margin-bottom:8px}
+.ft-txt{font-size:13px;line-height:1.7}
+.ft-col h4{
+  font-size:11px;text-transform:uppercase;letter-spacing:1.2px;
+  color:rgba(255,255,255,.6);margin-bottom:12px;font-weight:600;
+}
+.ft-col a{
+  display:block;color:rgba(255,255,255,.4);font-size:13px;
+  padding:3px 0;transition:color .2s;
+}
+.ft-col a:hover{color:#fff}
+.ft-bot{
+  margin-top:28px;padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;
+}
+.pay-row{display:flex;gap:5px;flex-wrap:wrap}
+.pay-tag{
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);
+  font-size:11px;padding:4px 8px;border-radius:3px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:780px){
+  .prod-wrap{grid-template-columns:1fr;gap:22px;padding:18px 16px 50px}
+  .gallery{position:static}
+  .prod-title{font-size:22px}
+  .ft-grid{grid-template-columns:1fr;gap:22px}
+  .ft-bot{flex-direction:column;gap:10px;text-align:center}
+}
+@media(max-width:480px){
+  .thumbs{grid-template-columns:repeat(5,1fr);gap:4px}
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO -->
+<div class="promo">Dodaj drugą parę &amp; zyskaj 30% zniżki &nbsp;·&nbsp; Bezpłatna dostawa na każde zamówienie</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-logo">Magnetyczne Bransoletki dla Par</div>
+</header>
+
+<!-- ═══ PRODUCT ═══ -->
+<div class="prod-wrap">
+
+  <!-- LEFT: GALLERY -->
+  <div class="gallery">
+    <div class="gal-main">
+      <img id="mainImg" src="https://www.magneticcouplesbracelets.com/cdn/shop/files/2x_light_brown_800x.jpg?v=1767802196" alt="Magnetyczne Bransoletki dla Par 2.0">
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <!-- RIGHT: INFO -->
+  <div class="prod-info">
+    <h1 class="prod-title">Magnetyczne Bransoletki dla Par 2.0</h1>
+
+    <div class="price-row">
+      <span class="price-sale">139,90 zł</span>
+      <span class="price-orig">149,90 zł</span>
+    </div>
+
+    <div class="rev-bar">
+      <span class="stars">★★★★★</span>
+      <span class="rev-cnt">21 opinii</span>
+    </div>
+
+    <div class="opt-lbl">Kolor</div>
+    <select class="color-select" id="colorSelect" onchange="selVar(this.value)"></select>
+
+    <div class="qty-wrap">
+      <div class="opt-lbl">Ilość</div>
+      <div class="qty-box">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <div class="qty-val" id="qtyVal">1</div>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <div class="promo-note">Dodaj drugą parę &amp; zyskaj 30% zniżki · Bezpłatna dostawa na każde zamówienie</div>
+    <button class="btn-cart">Dodaj do koszyka</button>
+
+    <hr class="divider">
+
+    <!-- ─── OPIS PRODUKTU – jeden ciągły blok ─── -->
+    <div class="prod-desc">
+
+      <p><strong>Magnetyczne Bransoletki dla Par 2.0</strong> to nowa wersja naszego pierwszego projektu – <strong>Original Magnetic Couples Bracelets</strong>.</p>
+
+      <p>Są symbolem wyboru, połączenia i zobowiązania do wspólnej drogi miłości, którą razem kroczycie.</p>
+
+      <p>Za każdym razem, gdy decydujesz się złączyć magnesy, to małe święto równowagi, którą razem tworzycie – taniec między dawaniem a braniem, przewodzeniem a wspieraniem się nawzajem w związku.</p>
+
+      <p>Przypominają o balansie między:</p>
+
+      <p><strong>energią męską</strong> – siłą i działaniem (zawieszkę z motywem gór) oraz<br>
+      <strong>energią żeńską</strong> – łagodnością i przepływem (zawieszkę z motywem oceanu).</p>
+
+      <p><strong>To właśnie Wasza decyzja o byciu razem sprawia, że te dwa światy łączą się w harmonijną całość.</strong></p>
+
+      <p>Nosząc je, codziennie przypominacie sobie o wspólnym zobowiązaniu do wzrostu – zarówno jako jednostki, jak i jako para.</p>
+
+      <p>Te bransoletki to coś więcej niż urocza biżuteria – niosą w sobie <strong>energię Waszej miłości.</strong> Są częścią Waszej opowieści, która trzyma Was razem bez względu na to, gdzie rzuci Was życie – jako drużyna, przez to wszystko – nawet gdy jesteście daleko od siebie.</p>
+
+      <p><strong>JAKO JEDNOŚĆ.</strong></p>
+
+      <p><strong>♥️ NOWOŚĆ: BEZPŁATNY BONUS Z TYMI BRANSOLETKAMI</strong></p>
+
+      <p>Otwórz zupełnie nowy świat siłą własnego umysłu z Magnetycznymi Bransoletkami dla Par.</p>
+
+      <p>Razem z zamóweniem otrzymasz nasz prezent: <strong>„Magia Bransoletki Odblokowana: Poradnik"</strong> – aby pomóc Ci programować swoje bransoletki jako codzienne przypomnienie o silnej, niezniszczalnej więzi i wyryć ją w sercu, umysłe i duszy – Twoim i Twojego partnera.</p>
+
+      <p><strong>Cechy:</strong> Niestandardowa klamra magnetyczna z stali nierdzewnej z logo MCB<br>
+      2 NOWE wyryte zawieszki z stali nierdzewnej: 1 × Góry  1 × Oceany</p>
+
+      <p><strong>Specyfikacja:</strong> Materiał: Linka &amp; stal nierdzewna<br>
+      Rozmiar: Dowolnie regulowany<br>
+      Długość: 15–25 cm / 6"–10"</p>
+
+      <p><strong>W zestawie:</strong> 2 × Bransoletki<br>
+      + Bezpłatny woreczek lniany<br>
+      + Bezpłatny „Magia Bransoletki Odblokowana: Poradnik" (E-book &amp; przewodnik audio)</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ REVIEWS ═══ -->
+<div class="rev-section">
+  <div class="rev-head">
+    <h2>Opinie klientów</h2>
+    <div class="rev-summary">
+      <span class="stars">★★★★★</span>
+      <span>Oparte na 21 recenzjach</span>
+    </div>
+  </div>
+  <div class="rev-grid" id="revGrid"></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft-in">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-brand">Magnetyczne Bransoletki dla Par</div>
+        <div class="ft-txt">Łączymy świat bezwarunkową miłością.<br>Tworzone z miłością ♥</div>
+      </div>
+      <div class="ft-col">
+        <h4>Informacje</h4>
+        <a href="#">Nasz Storytelling</a>
+        <a href="#">Blog</a>
+        <a href="#">Pytania &amp; Odpowiedzi</a>
+        <a href="#">Kontakt</a>
+      </div>
+      <div class="ft-col">
+        <h4>Obsługa Klienta</h4>
+        <a href="#">Informacje o przesyłce</a>
+        <a href="#">Regulamin</a>
+        <a href="#">Polityka zwrotów</a>
+        <a href="#">Polityka prywatności</a>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 Magnetyczne Bransoletki dla Par · 100% Tworzone z Miłością ♥</span>
+      <div class="pay-row">
+        <span class="pay-tag">Visa</span>
+        <span class="pay-tag">Mastercard</span>
+        <span class="pay-tag">PayU</span>
+        <span class="pay-tag">BLIK</span>
+        <span class="pay-tag">Przelewy24</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ JS ═══ -->
+<script>
+(function(){
+
+  var F="https://www.magneticcouplesbracelets.com/cdn/shop/files/";
+  var P="https://www.magneticcouplesbracelets.com/cdn/shop/products/";
+
+  /* All gallery images in order (matches original page) */
+  var G=[
+    F+"2x_light_brown_800x.jpg?v=1767802196",
+    P+"IMG_8685_1_800x.jpg?v=1767802356",
+    F+"Black_WineRed_800x.jpg?v=1767802356",
+    P+"IMG_8633_1_800x.jpg?v=1767802356",
+    F+"2xBlack_800x.jpg?v=1767802356",
+    F+"ropemagnet5_0eaa94ed-5f5c-4733-a07f-09ec3e4856e9_800x.jpg?v=1767802356",
+    F+"Black_Grey_800x.jpg?v=1767802356",
+    P+"IMG_0483_1_800x.jpg?v=1767802356",
+    F+"Black_Beige_800x.jpg?v=1767802356",
+    P+"IMG_7591_800x.jpg?v=1767802356",
+    F+"Black_Pink_800x.jpg?v=1767802356",
+    F+"ropemagnet2_125aba8a-90a0-47be-9dab-231e693aaec3_800x.jpg?v=1767802356",
+    F+"2x_light_brown_0176bc5e-f07d-425e-98ec-1fcd5bc04b03_800x.jpg?v=1767802356",
+    F+"2xNavyBlue_800x.jpg?v=1767802196",
+    F+"NavyBlue_WineRed_800x.jpg?v=1767802196",
+    F+"2.0charms_800x.jpg?v=1767802196",
+    F+"2.0charms2_800x.jpg?v=1767802196",
+    F+"2.0charms3_800x.jpg?v=1767802196",
+    F+"magneticcouplesbracelets2.0pouch_35d0e14c-c4c8-4ce2-9378-8bd3991b43bc_800x.jpg?v=1767802196",
+    F+"FREEBraceletsmagicunlockedthemanual_a4c67a00-3772-4899-a7ca-b7c30da43ef4_800x.jpg?v=1767802196"
+  ];
+
+  /* Variants – name + matching main image */
+  var V=[
+    {n:"Burgundia & Czarny",  img:F+"Black_WineRed_800x.jpg?v=1767802356"},
+    {n:"2× Czarny",           img:F+"2xBlack_800x.jpg?v=1767802356"},
+    {n:"Szary & Czarny",      img:F+"Black_Grey_800x.jpg?v=1767802356"},
+    {n:"Beż & Czarny",        img:F+"Black_Beige_800x.jpg?v=1767802356"},
+    {n:"Różowy & Czarny",     img:F+"Black_Pink_800x.jpg?v=1767802356"},
+    {n:"2× Jasny Brąz",       img:F+"2x_light_brown_800x.jpg?v=1767802196"},
+    {n:"2× Granatowy",        img:F+"2xNavyBlue_800x.jpg?v=1767802196"},
+    {n:"Burgundia & Granatowy",img:F+"NavyBlue_WineRed_800x.jpg?v=1767802196"}
+  ];
+
+  var mainImg=document.getElementById('mainImg');
+  var thumbsEl=document.getElementById('thumbs');
+  var selEl=document.getElementById('colorSelect');
+  var activeThumb=0;
+
+  /* Build thumbnails */
+  G.forEach(function(src,i){
+    var el=document.createElement('div');
+    el.className='thumb'+(i===0?' active':'');
+    el.innerHTML='<img src="'+src+'" alt="" loading="lazy">';
+    el.onclick=function(){setThumb(i)};
+    thumbsEl.appendChild(el);
+  });
+
+  function setThumb(i){
+    activeThumb=i;
+    mainImg.src=G[i];
+    document.querySelectorAll('.thumb').forEach(function(t,x){
+      t.classList.toggle('active',x===i);
+    });
+  }
+
+  /* Build color dropdown */
+  V.forEach(function(v,i){
+    var o=document.createElement('option');
+    o.value=i;
+    o.textContent=v.n;
+    if(i===0) o.selected=true;
+    selEl.appendChild(o);
+  });
+
+  /* On color change – switch main image + find matching thumb */
+  window.selVar=function(idx){
+    var v=V[parseInt(idx)];
+    mainImg.src=v.img;
+    // activate matching thumb if found
+    var found=false;
+    document.querySelectorAll('.thumb').forEach(function(t,x){
+      if(t.querySelector('img').getAttribute('src')===v.img && !found){
+        found=true;
+        activeThumb=x;
+        document.querySelectorAll('.thumb').forEach(function(th){th.classList.remove('active')});
+        t.classList.add('active');
+      }
+    });
+  };
+
+  /* Quantity */
+  var qty=1;
+  var qEl=document.getElementById('qtyVal');
+  window.changeQty=function(d){
+    qty=Math.max(1,qty+d);
+    qEl.textContent=qty;
+  };
+
+  /* Reviews */
+  var R=[
+    {n:"Irina F.",l:"I",s:5,t:"Są naprawdę wspaniałe!!!",b:"Są naprawdę wspaniałe!!! Bardzo polecam, super jakość i szybka dostawa."},
+    {n:"María G.",l:"M",s:5,t:"Kocham je!!",b:"Jestem zachwycona nimi. Kupiłam je dla swojego chłopaka. Mamy związek na odległość i z tymi bransoletkami czujemy się bliżej siebie. Są piękne i bardzo dobrej jakości."},
+    {n:"Adelina D.",l:"A",s:5,t:"Fajny produkt",b:"Doskonała obsługa klienta. Szybko rozwiązali problem, który miałam z zamówienie. Bardzo zadowolona!"},
+    {n:"Josephine R.",l:"J",s:5,t:"Kocham je!! Dostajemy dużo komplementów",b:"Kocham je!! Dostajemy dużo komplementów, gdy je nosimy razem z partnerem ❤️❤️"},
+    {n:"Joy",l:"J",s:5,t:"Wspaniałe bransoletki ❤️",b:"Kocham pomysł stojący za tym prezentem! Kupiłam je na urodziny mąża, ale kurier nie dostarczył. Firma bardzo pomogła mi dostać kolejną parę. Jestem bardzo zadowolona!!!"}
+  ];
+
+  var rEl=document.getElementById('revGrid');
+  R.forEach(function(r){
+    var stars='';
+    for(var i=0;i<5;i++) stars+=(i<r.s?'★':'☆');
+    rEl.innerHTML+='<div class="r-card">'
+      +'<div class="r-top"><div class="r-av">'+r.l+'</div><div><div class="r-nm">'+r.n+'</div><div class="r-st">'+stars+'</div></div></div>'
+      +'<div class="r-ttl">'+r.t+'</div>'
+      +'<div class="r-bdy">'+r.b+'</div>'
+      +'</div>';
+  });
+
+})();
+</script>
+</body>
+</html>
